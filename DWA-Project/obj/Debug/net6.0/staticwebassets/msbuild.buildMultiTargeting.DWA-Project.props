@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DWA-Project.props" />
+</Project>

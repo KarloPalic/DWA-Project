@@ -1,0 +1,49 @@
+﻿@model AdministrativeModule.Models.VideoCreate
+
+<h2>Create Video</h2>
+
+<form asp-controller="Home" asp-action="CreateVideo" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name">Video Name:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Description:</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GenreId">Genre:</label>
+        <select asp-for="GenreId" class="form-control">
+            <option value="">-- Select Genre --</option>
+            @foreach (var genre in Model.Genres.DistinctBy(g => g.Name))
+            {
+                <option value="@genre.Id">@genre.Name</option>
+            }
+        </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TotalSeconds">Total Seconds:</label>
+        <input asp-for="TotalSeconds" class="form-control" />
+        <span asp-validation-for="TotalSeconds" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StreamingUrl">Streaming URL:</label>
+        <input asp-for="StreamingUrl" class="form-control" />
+        <span asp-validation-for="StreamingUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageContentId">Image Content Id:</label>
+        <input asp-for="ImageContentId" class="form-control" />
+        <span asp-validation-for="ImageContentId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Video</button>
+</form>

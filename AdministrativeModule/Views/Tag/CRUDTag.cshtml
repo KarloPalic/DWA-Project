@@ -1,0 +1,31 @@
+﻿@model AdministrativeModule.Models.TagManagement
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/Tag.js"></script>
+<a asp-action="CreateTag" class="btn btn-primary">Add Tag</a>
+<br />
+
+<table class="table" id="tagTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tag in Model.Tags)
+        {
+            <tr>
+                <td class="tagId" data-tagid="@tag.Id">@tag.Id</td>
+                <td contenteditable="true" class="editable" data-tagid="@tag.Id">@tag.Name</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteTag('@tag.Id')">Delete</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="saveTag('@tag.Id')">Save</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

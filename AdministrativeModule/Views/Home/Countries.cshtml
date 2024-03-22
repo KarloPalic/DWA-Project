@@ -1,0 +1,50 @@
+﻿@model AdministrativeModule.Models.CountryList
+<script src="/js/Countries.js"></script>
+
+<div class="filter-section">
+    <form id="filterForm" method="get" action="@Url.Action("Countries")">
+        <label for="filterByCode">Filter by Code:</label>
+        <input type="text" id="filterByCode" name="filterByCode" value="@Model.FilterByCode" />
+
+        <button type="submit" id="applyFilters">Apply Filters</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var country in Model.Countries)
+        {
+            <tr>
+                <td>@country.Id</td>
+                <td>@country.Code</td>
+                <td>@country.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id="pagination">
+    <div class="pagination">
+        <span>Page @Model.Page of @Model.Totalpages</span>
+
+        @if (Model.Page > 1)
+        {
+            <button type="button" onclick="submitForm(@Model.Page - 1)">Previous</button>
+        }
+
+        @if (Model.Page < Model.Totalpages)
+        {
+            <button type="button" onclick="submitForm(@Model.Page + 1)">Next</button>
+        }
+
+    </div>
+</div>
+
+

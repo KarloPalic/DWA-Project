@@ -1,0 +1,32 @@
+﻿@model AdministrativeModule.Models.GenreManagement
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/Genre.js"></script>
+
+<a asp-action="CreateGenre" class="btn btn-primary">Add Genre</a>
+<br />
+
+<table class="table" id="genreTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var genre in Model.Genres)
+        {
+            <tr>
+                <td class="genreId" data-genreid="@genre.Id">@genre.Id</td>
+                <td contenteditable="true" class="editable" data-genreid="@genre.Id" data-field="Name">@genre.Name</td>
+                <td contenteditable="true" class="editable" data-genreid="@genre.Id" data-field="Description">@genre.Description</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteGenre('@genre.Id')">Delete</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="saveGenre('@genre.Id')">Save</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

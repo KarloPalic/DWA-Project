@@ -1,0 +1,45 @@
+﻿@model PublicModule.Models.CardView
+
+@{
+    ViewData["Title"] = "Card Selection Page";
+}
+
+
+<div>
+    <p>Welcome, @ViewBag.Username!</p>
+</div>
+
+<h1>Card Selection</h1><br />
+
+@if (Model.SelectedVideo != null)
+{
+    <div>
+        <h2>@Model.SelectedVideo.Name</h2>
+        <p>Created At: @Model.SelectedVideo.CreatedAt</p>
+        <p>Total Seconds: @Model.SelectedVideo.TotalSeconds</p>
+        @if (Model.SelectedVideo.Genre != null)
+        {
+            <p>Genre: @Model.SelectedVideo.Genre.Name</p>
+        }
+
+        @if (Model.SelectedVideo.Image != null)
+        {
+            <img src="@Model.SelectedVideo.Image.Content" alt="@Model.SelectedVideo.Name" style="width: 200px; height: auto;" />
+
+        }<br />
+
+        @if (!string.IsNullOrEmpty(Model.SelectedVideo.StreamingUrl))
+        {
+            <a href="@Model.SelectedVideo.StreamingUrl" class="btn btn-primary">Play Video</a>
+        }<br />
+
+        
+
+
+        <a asp-action="Index">Back to Video Selection</a>
+    </div>
+}
+else
+{
+    <p>No video selected.</p>
+}

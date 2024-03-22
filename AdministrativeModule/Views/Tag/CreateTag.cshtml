@@ -1,0 +1,13 @@
+﻿@model AdministrativeModule.Models.TagManagement
+
+<h2>Create Tag</h2>
+
+<form asp-controller="Tag" asp-action="CreateTag" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Name">Tag Name:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Tag</button>
+</form>

@@ -1,0 +1,74 @@
+﻿@model AdministrativeModule.Models.SelectVideo
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/SelectVideo.js"></script>
+<h2>Select Video</h2>
+
+
+
+<form method="post" asp-action="SelectVideo" id="selectVideoForm">
+    <div class="form-group">
+        <div>
+            <label for="SelectedVideoName">Select Video:</label>
+        </div>
+        <select id="SelectedVideoName" name="SelectedVideoName" class="form-control">
+            <option value="">-- Select Video --</option>
+            @foreach (var videoName in Model.VideoNames)
+            {
+                <option value="@videoName">@videoName</option>
+            }
+        </select>
+        <input type="hidden" id="SelectedVideoNameHidden" name="SelectedVideoNameHidden" value="@Model.SelectedVideoName" />
+        <br />
+    </div>
+</form>
+
+<div>
+    <br />
+    @if (Model.Video != null)
+    {
+        <h3>Video Details</h3>
+        <dl class="row">
+            <dt class="col-sm-2">ID:</dt>
+            <dd id="videoId" class="col-sm-10">@Model.Video.Id</dd>
+
+            <dt class="col-sm-2">Name:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="VideoName" name="VideoName" class="form-control" value="@Model.Video.Name" />
+            </dd>
+
+            <dt class="col-sm-2">Description:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="Description" name="Description" class="form-control" value="@Model.Video.Description" />
+            </dd>
+
+            <dt class="col-sm-2">Genre:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="GenreName" name="GenreName" class="form-control" value="@Model.Video.Genre?.Name" />
+            </dd>
+
+            <dt class="col-sm-2">Genre Id:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="GenreId" name="GenreId" class="form-control" value="@Model.Video.Genre?.Id" />
+            </dd>
+
+            <dt class="col-sm-2">Total Seconds:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="TotalSeconds" name="TotalSeconds" class="form-control" value="@Model.Video.TotalSeconds" />
+            </dd>
+
+            <dt class="col-sm-2">Streaming URL:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="StreamingUrl" name="StreamingUrl" class="form-control" value="@Model.Video.StreamingUrl" />
+            </dd>
+
+            <dt class="col-sm-2">Image Content ID:</dt>
+            <dd class="col-sm-10">
+                <input type="text" id="ImageId" name="ImageId" class="form-control" value="@Model.Video.ImageId" />
+            </dd>
+        </dl>
+        <button id="saveChangesbtn" type="button" class="btn btn-primary" onclick="saveChanges()">Save Changes</button>
+        <button id="deleteVideobtn" type="button" class="btn btn-danger" onclick="deleteVideo()">Delete</button>
+    }
+</div>
+

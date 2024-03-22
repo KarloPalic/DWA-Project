@@ -1,0 +1,40 @@
+﻿@model PublicModule.Models.CardView
+
+@{
+    ViewData["Title"] = "Video Selection Page";
+}
+<link rel="stylesheet" href="~/css/Index.css" />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/Index.js"></script>
+<div>
+    <p>Welcome, @ViewBag.Username!</p>
+</div>
+
+
+<div class="text-center">
+    <h1 class="display-4">Video Selection Page</h1>
+
+    <div class="filter-section">
+        <form id="filterForm" method="get" action="@Url.Action("Index")">
+            <label for="filterByName">Filter by Name:</label>
+            <input type="text" id="filterByName" name="filterByName" value="@Model.FilterByName" />
+
+            <button type="button" id="applyFilters">Apply Filters</button>
+        </form>
+    </div>
+
+    <div class="card-container">
+    @foreach (var video in Model.Videos)
+    {
+        <div class="card" data-video-id="@video.Id">
+            <div class="card-body">
+                <h5 class="card-title">@video.Name</h5>
+                <p class="card-text">@video.Description</p><br>
+                <img src="@video.Image?.Content" class="card-img-top" alt="@video.Name">
+            </div>
+        </div>
+    }
+</div>
+
+</div>
+

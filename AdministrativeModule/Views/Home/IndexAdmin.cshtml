@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Administrative Module";
+}
+
+@model AdministrativeModule.Models.VideoList
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="~/css/IndexAdmin.css" />
+
+<div class="text-center">
+    <h1 class="display-4">Videos</h1>
+
+    <div class="filter-section">
+        <form id="filterForm" method="get" action="@Url.Action("IndexAdmin")">
+            <label for="filterByName">Filter by Name:</label>
+            <input type="text" id="filterByName" name="filterByName" value="@Model.FilterByName" />
+
+            <label for="filterByGenre">Filter by Genre:</label>
+            <select id="filterByGenre" name="filterByGenre">
+                <option value="">All Genres</option>
+                @foreach (var genre in Model.Genres.DistinctBy(g => g.Name))
+                {
+                    <option value="@genre.Name">@genre.Name</option>
+                }
+            </select>
+
+            <button type="button" id="applyFilters">Apply Filters</button>
+
+
+            <a asp-action="CreateVideo" class="btn btn-primary">Add Video</a>
+
+        </form>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Genre</th>
+                    <th class="total-seconds">Total Seconds</th>
+                    <th>Streaming URL</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var video in Model.Videos)
+                {
+                    <tr>
+                        <td>@video.Name</td>
+                        <td>@video.Description</td>
+                        <td>@(video.Genre != null ? video.Genre.Name : "")</td>
+                        <td class="total-seconds">@video.TotalSeconds</td>
+                        <td>@video.StreamingUrl</td>
+                        <td>@(video.Image != null ? video.Image.Content : "")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">
+        <span>Page @Model.Page of @Model.TotalPages.</span>
+
+        @if (Model.Page > 1)
+        {
+            <button type="button" onclick="submitForm(@Model.Page - 1)">Previous</button>
+        }
+
+        @if (Model.Page < Model.TotalPages)
+        {
+            <button type="button" onclick="submitForm(@Model.Page + 1)">Next</button>
+        }
+    </div>
+
+</div>
+
+<script>
+    function submitForm(page) {
+        var formData = {
+            filterByName: $("#filterByName").val(),
+            filterByGenre: $("#filterByGenre").val(),
+            page: page
+        };
+
+        $.ajax({
+            url: $("#filterForm").attr("action"),
+            type: "GET",
+            data: formData,
+            success: function (result) {
+                $(".table tbody").html($(result).find(".table tbody").html());
+                $(".pagination").html($(result).find(".pagination").html());
+            }
+        });
+    }
+
+    $("#applyFilters").click(function () {
+        submitForm(1);
+    });
+</script>
+
